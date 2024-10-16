@@ -1,0 +1,86 @@
+.todo-list {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-grow: 1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 2px solid #eee;
+  font-weight: 600;
+}
+
+td {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.completed-cell {
+  text-align: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Pagination Styles */
+.page-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #eee;
+  cursor: pointer;
+  border-radius: 4px;
+  flex: 1; /* Make buttons flexible */
+}
+
+.page-button.active {
+  background-color: #5D4777;
+  color: white;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  th, td {
+    padding: 0.8rem; /* Reduced padding for smaller screens */
+  }
+
+  table {
+    font-size: 14px; /* Reduce font size for smaller screens */
+  }
+
+  .pagination {
+    flex-wrap: wrap; /* Allow wrapping for pagination */
+  }
+}
+
+/* Additional styles for pagination */
+.pagination button {
+  min-width: 30px; /* Set a minimum width for buttons */
+}
+
+/* Responsive handling of pagination to show 4 buttons plus ellipsis */
+@media (max-width: 480px) {
+  .todo-list {
+    padding: 1rem; /* Reduce padding for small screens */
+  }
+
+  .page-button {
+    padding: 0.4rem; /* Smaller padding for very small screens */
+  }
+}
