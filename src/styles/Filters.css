@@ -12,6 +12,7 @@
   font-weight: 600;
   margin-bottom: 1.5rem;
   text-align: center; /* Center align title */
+  color: #02357a;
 }
 
 .filters-container {
@@ -25,16 +26,45 @@
 }
 
 .search-input {
-  width: 100%;
+  width: calc(100% - 40px); /* Space for the button */
   padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid #644c79;
+  border-radius: 4px 0 0 4px; /* Rounded corners only on left */
+  color: white; /* Text color */
+}
+
+.search-input::placeholder {
+  color: #644c79;
+}
+
+.search-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 40px; /* Width of the button */
+  background-color: #5D4777; /* Button background color */
+  border: none;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0; /* Rounded corners only on right */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-button img {
+  width: 20px; /* Icon size */
+  height: auto;
 }
 
 .completed-filter {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: #02357a;
+  font-family: 'Karbon';
+  font-size: large;
+  font-weight: 600;
 }
 
 .toggle {
@@ -82,12 +112,74 @@
   transform: translateX(26px);
 }
 
-.user-select {
-  width: 100%;
+.user-filter {
+  margin-top: 10px;
+  position: relative;
+}
+
+.user-filter label {
+  color: #02357a;
+  font-family: 'Karbon', sans-serif;
+  font-size: large;
+  font-weight: 600;
+}
+
+.user-dropdown {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.dropdown-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 0.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid #02357a;
+  border-radius: 4px; /* Rounded corners */
+  background-color: white; /* Background color */
+  cursor: pointer;
+  width: 100%;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%; /* Posiziona sotto il pulsante */
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #02357a;
   border-radius: 4px;
-  height: 100px;
+  z-index: 100; /* Assicura che si sovrapponga ad altri elementi */
+  max-height: 150px; /* Limita l'altezza */
+  overflow-y: auto; /* Abilita lo scorrimento se necessario */
+}
+
+.dropdown-option {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.dropdown-option:hover {
+  background-color: #f0f0f0; /* Colore di hover */
+}
+
+.dropdown-option.selected {
+  background-color: #02357a; /* Colore per opzione selezionata */
+  color: white; /* Testo bianco per opzione selezionata */
+}
+
+.dropdown-button{
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  border-radius: 50%;
+  border: #02357a solid 1px;
+  background-color: #ffffff00;
+}
+
+.dropdown-button:hover{
+  background-color: #e0e0e0;
 }
 
 .reset-button {
@@ -117,37 +209,8 @@
     flex-direction: column; /* Stack elements on small screens */
     align-items: flex-start; /* Align items to start */
   }
-}
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-}
-
-/* Pulsante di paginazione */
-.page-button {
-  padding: 0.5rem 1rem;
-  border: none;
-  background-color: #eee;
-  cursor: pointer;
-  border-radius: 4px;
-  flex: 1; /* Rende i pulsanti flessibili */
-}
-
-.page-button.active {
-  background-color: #5D4777;
-  color: white;
-}
-
-.loading {
-  text-align: center;
-  padding: 2rem;
-}
-
-/* Stile per ellissi */
-.pagination span {
-  padding: 0.5rem;
-  align-self: center; /* Centro l'ellissi */
+  .user-dropdown {
+    flex-direction: column; /* Stack elements on small screens */
+  }
 }

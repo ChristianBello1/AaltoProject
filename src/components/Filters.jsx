@@ -1,23 +1,39 @@
-import { useState } from 'react'
-import '../styles/Filters.css'
+import { useState } from 'react';
+import '../styles/Filters.css';
+import searchIcon from '../assets/search.svg'; // Importa l'icona di ricerca
+import arrowDownIcon from '../assets/arrowdown.svg'; // Importa l'icona a freccia
 
 export default function Filters({ onFilterChange }) {
-  const [searchText, setSearchText] = useState('')
-  const [completed, setCompleted] = useState(false)
-  const [selectedUsers, setSelectedUsers] = useState([])
+  const [searchText, setSearchText] = useState('');
+  const [completed, setCompleted] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false); // Stato per gestire il dropdown
 
   const handleSearch = (e) => {
     if (e.key === 'Enter') {
-      onFilterChange({ searchText, completed, selectedUsers })
+      onFilterChange({ searchText, completed, selectedUsers });
     }
-  }
+  };
 
   const resetFilters = () => {
-    setSearchText('')
-    setCompleted(false)
-    setSelectedUsers([])
-    onFilterChange({ searchText: '', completed: false, selectedUsers: [] })
-  }
+    setSearchText('');
+    setCompleted(false);
+    setSelectedUsers([]);
+    onFilterChange({ searchText: '', completed: false, selectedUsers: [] });
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const handleUserSelect = (userId) => {
+    const newSelectedUsers = selectedUsers.includes(userId)
+      ? selectedUsers.filter(user => user !== userId)
+      : [...selectedUsers, userId];
+
+    setSelectedUsers(newSelectedUsers);
+    onFilterChange({ searchText, completed, selectedUsers: newSelectedUsers });
+  };
 
   return (
     <div className="filters-panel">
@@ -33,6 +49,12 @@ export default function Filters({ onFilterChange }) {
             onChange={(e) => setSearchText(e.target.value)}
             onKeyPress={handleSearch}
           />
+          <button
+            className="search-button"
+            onClick={() => onFilterChange({ searchText, completed, selectedUsers })}
+          >
+            <img src={searchIcon} alt="Search" />
+          </button>
         </div>
 
         <div className="completed-filter">
@@ -42,8 +64,8 @@ export default function Filters({ onFilterChange }) {
               type="checkbox"
               checked={completed}
               onChange={(e) => {
-                setCompleted(e.target.checked)
-                onFilterChange({ searchText, completed: e.target.checked, selectedUsers })
+                setCompleted(e.target.checked);
+                onFilterChange({ searchText, completed: e.target.checked, selectedUsers });
               }}
             />
             <span className="toggle-slider"></span>
@@ -52,22 +74,28 @@ export default function Filters({ onFilterChange }) {
 
         <div className="user-filter">
           <label>SELECT USER ID</label>
-          <select
-            multiple
-            className="user-select"
-            value={selectedUsers}
-            onChange={(e) => {
-              const values = Array.from(e.target.selectedOptions, option => option.value)
-              setSelectedUsers(values)
-              onFilterChange({ searchText, completed, selectedUsers: values })
-            }}
-          >
-            {[...Array(10)].map((_, i) => (
-              <option key={i + 1} value={i + 1}>
-                User {i + 1}
-              </option>
-            ))}
-          </select>
+          <div className="user-dropdown">
+            <div className="dropdown-input" onClick={toggleDropdown}>
+              {selectedUsers.length > 0 ? `Selected: ${selectedUsers.join(', ')}` : 'Select User'}
+              <button className="dropdown-button">
+                <img src={arrowDownIcon} alt="Dropdown" />
+              </button>
+            </div>
+
+            {dropdownOpen && (
+              <div className="dropdown-options">
+                {[...Array(10)].map((_, i) => (
+                  <div
+                    key={i + 1}
+                    className={`dropdown-option ${selectedUsers.includes((i + 1).toString()) ? 'selected' : ''}`}
+                    onClick={() => handleUserSelect((i + 1).toString())}
+                  >
+                    User {i + 1}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         <button onClick={resetFilters} className="reset-button">
@@ -75,5 +103,5 @@ export default function Filters({ onFilterChange }) {
         </button>
       </div>
     </div>
-  )
+  );
 }
