@@ -1,8 +1,10 @@
-# React + Vite
+# AaltoProject
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Progetto React creato con Vite.
 
-Currently, two official plugins are available:
+## Installazione e Avvio
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Clona il repository, entra nella directory, installa le dipendenze e avvia il progetto con un solo comando:
+
+```bash
+git clone https://github.com/ChristianBello1/AaltoProject.git && cd AaltoProject && npm install && npm run dev
