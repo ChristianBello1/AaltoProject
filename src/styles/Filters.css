@@ -30,7 +30,7 @@
   padding: 0.5rem;
   border: 1px solid #644c79;
   border-radius: 4px 0 0 4px;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .search-input::placeholder {
