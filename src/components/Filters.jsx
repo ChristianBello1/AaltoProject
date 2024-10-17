@@ -47,7 +47,7 @@ export default function Filters({ onFilterChange }) {
             className="search-input"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            onKeyPress={handleSearch}
+            onKeyUp={handleSearch}
           />
           <button
             className="search-button"

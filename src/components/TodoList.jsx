@@ -1,11 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/TodoList.css';
 
 export default function TodoList({ filters }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const { data: todos, isLoading } = useQuery({
     queryKey: ['todos'],
@@ -37,44 +38,22 @@ export default function TodoList({ filters }) {
 
   const renderPaginationButtons = () => {
     const buttons = [];
-    
-    // Aggiungi frecce per la navigazione
+
+    // Frecce navigazione
     if (currentPage > 1) {
       buttons.push(
         <button key="prev" onClick={() => handlePageChange(currentPage - 1)} className="page-button">
-          &lt;
+          <img src="./src/assets/arrowleft.svg" alt="" />
         </button>
       );
     }
 
     // Logica per mostrare i numeri delle pagine
-    if (totalPages <= 4) {
-      for (let i = 1; i <= totalPages; i++) {
-        buttons.push(
-          <button
-            key={i}
-            onClick={() => handlePageChange(i)}
-            className={`page-button ${currentPage === i ? 'active' : ''}`}
-          >
-            {i}
-          </button>
-        );
-      }
-    } else {
-      // Mostra la prima pagina
-      buttons.push(
-        <button key={1} onClick={() => handlePageChange(1)} className={`page-button ${currentPage === 1 ? 'active' : ''}`}>
-          1
-        </button>
-      );
-
-      // Mostra pagine centrali
-      if (currentPage > 3) {
-        buttons.push(<span key="dots1">...</span>);
-      }
-
-      const startPage = Math.max(2, currentPage - 1);
-      const endPage = Math.min(totalPages - 1, currentPage + 1);
+    if (windowWidth < 360) {
+      // Mostra solo 2 pagine in caso di larghezza sotto 360px
+      const maxPagesToShow = 2;
+      const startPage = Math.max(1, currentPage - 1);
+      const endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
 
       for (let i = startPage; i <= endPage; i++) {
         buttons.push(
@@ -87,15 +66,51 @@ export default function TodoList({ filters }) {
           </button>
         );
       }
-
-      // Mostra l'ultima pagina
-      if (currentPage < totalPages - 2) {
-        buttons.push(<span key="dots2">...</span>);
+    } else {
+      if (totalPages <= 4) {
+        for (let i = 1; i <= totalPages; i++) {
+          buttons.push(
+            <button
+              key={i}
+              onClick={() => handlePageChange(i)}
+              className={`page-button ${currentPage === i ? 'active' : ''}`}
+            >
+              {i}
+            </button>
+          );
+        }
+      } else {
+        // Mostra la prima pagina
         buttons.push(
-          <button key={totalPages} onClick={() => handlePageChange(totalPages)} className={`page-button ${currentPage === totalPages ? 'active' : ''}`}>
-            {totalPages}
+          <button key={1} onClick={() => handlePageChange(1)} className={`page-button ${currentPage === 1 ? 'active' : ''}`}>
+            1
           </button>
         );
+
+        const startPage = Math.max(2, currentPage - 1);
+        const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+        for (let i = startPage; i <= endPage; i++) {
+          buttons.push(
+            <button
+              key={i}
+              onClick={() => handlePageChange(i)}
+              className={`page-button ${currentPage === i ? 'active' : ''}`}
+            >
+              {i}
+            </button>
+          );
+        }
+
+        // Mostra l'ultima pagina
+        if (currentPage < totalPages - 2) {
+          buttons.push(<span style={{ marginTop: '17px' }} key="dots2">...</span>);
+          buttons.push(
+            <button key={totalPages} onClick={() => handlePageChange(totalPages)} className={`page-button ${currentPage === totalPages ? 'active' : ''}`}>
+              {totalPages}
+            </button>
+          );
+        }
       }
     }
 
@@ -103,13 +118,27 @@ export default function TodoList({ filters }) {
     if (currentPage < totalPages) {
       buttons.push(
         <button key="next" onClick={() => handlePageChange(currentPage + 1)} className="page-button">
-          &gt;
+          <img src="./src/assets/arrowright.svg" alt="" />
         </button>
       );
     }
 
     return buttons;
   };
+
+  // Aggiorna la larghezza della finestra all'aumentare del resize
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   if (isLoading) {
     return <div className="loading">Loading...</div>;
@@ -121,8 +150,8 @@ export default function TodoList({ filters }) {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Title</th>
-            <th>Completed</th>
+            <th>TITLE</th>
+            <th>COMPLETED</th>
           </tr>
         </thead>
         <tbody>

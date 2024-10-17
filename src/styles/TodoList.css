@@ -16,11 +16,12 @@ th {
   padding: 1rem;
   border-bottom: 2px solid #eee;
   font-weight: 600;
+  color: #02357a;
 }
 
 td {
   padding: 1rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 2px solid #43b7e6;
 }
 
 .completed-cell {
@@ -34,18 +35,17 @@ td {
   margin-top: 1.5rem;
 }
 
-/* Pagination Styles */
 .page-button {
   padding: 0.5rem 1rem;
   border: none;
   background-color: #eee;
   cursor: pointer;
   border-radius: 4px;
-  flex: 1; /* Make buttons flexible */
+  flex: 1;
 }
 
 .page-button.active {
-  background-color: #5D4777;
+  background-color: #02357a;
   color: white;
 }
 
@@ -54,33 +54,31 @@ td {
   padding: 2rem;
 }
 
-/* Responsive Styles */
+
 @media (max-width: 768px) {
   th, td {
-    padding: 0.8rem; /* Reduced padding for smaller screens */
+    padding: 0.8rem;
   }
 
   table {
-    font-size: 14px; /* Reduce font size for smaller screens */
+    font-size: 14px;
   }
 
   .pagination {
-    flex-wrap: wrap; /* Allow wrapping for pagination */
+    flex-wrap: wrap;
   }
 }
 
-/* Additional styles for pagination */
 .pagination button {
-  min-width: 30px; /* Set a minimum width for buttons */
+  min-width: 30px;
 }
 
-/* Responsive handling of pagination to show 4 buttons plus ellipsis */
 @media (max-width: 480px) {
   .todo-list {
-    padding: 1rem; /* Reduce padding for small screens */
+    padding: 1rem;
   }
 
   .page-button {
-    padding: 0.4rem; /* Smaller padding for very small screens */
+    padding: 0.4rem;
   }
 }
